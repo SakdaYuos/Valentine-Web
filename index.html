@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Will You Be My Valentine? 💖</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            background: white;
+            padding: 60px 80px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #ff4d88;
+            font-size: 40px;
+            margin: 0;
+        }
+
+        button {
+            padding: 20px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            position: relative;
+        }
+
+        #yesBtn {
+            background: #ff4d88;
+            color: white;
+        }
+
+        #noBtn {
+            background: #ccc;
+            color: black;
+            position: absolute;
+        }
+
+        /* Optional: style for floating GIF animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-gif {
+            animation: float 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Davv! Badyy. Will You Be My Valentine? 🤍🤍🤍</h1>
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">No 😢</button>
+    <p id="message" style="margin-top: 20px; color: #ff4d88; font-weight: bold;"></p>
+</div>
+
+<script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const message = document.getElementById("message");
+
+    let noCount = 0;
+
+    const messages = [
+        "Are you sure? 🥺",
+        "Really sure? 😭",
+        "Think again 💕",
+        "Don't break my heart 💔",
+        "Last chance 😢"
+    ];
+
+    // Move NO button randomly
+    function moveNo() {
+        noCount++;
+        if (noCount <= messages.length) {
+            message.innerText = messages[noCount - 1];
+        } else {
+            message.innerText = "You can't say no! 😝";
+        }
+
+        const containerRect = document.querySelector('.container').getBoundingClientRect();
+        const x = Math.random() * (containerRect.width - noBtn.offsetWidth);
+        const y = Math.random() * (containerRect.height - noBtn.offsetHeight);
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+
+        // Make YES button bigger each time
+        let size = parseInt(window.getComputedStyle(yesBtn).fontSize);
+        yesBtn.style.fontSize = (size + 2) + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNo);
+    noBtn.addEventListener("click", moveNo);
+
+    // YES button click: show full-screen message with GIF
+    yesBtn.addEventListener("click", function() {
+        document.body.innerHTML = `
+            <div style="
+                height:100vh;
+                width:100vw;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+                flex-direction:column;
+                color:white;
+                font-family:Arial, sans-serif;
+                text-align:center;
+                overflow:hidden;
+            ">
+                <h1 style="font-size:50px; margin: 0;">I knew you would say YES! 🤍🤍🤍</h1>
+                <p style="font-size:25px; margin: 20px 0;">You are now officially my Valentine 😘</p>
+                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDZkNTJqZWNud2NkcXowemdxMXU1MHE5Znoybmp5YTdvY2hwZmdrNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3otO6sjJuAXvmukobS/giphy.gif" 
+                     class="floating-gif"
+                     style="width:300px; max-width:80%; border-radius:20px;" 
+                     alt="Valentine GIF"/>
+            </div>
+        `;
+    });
+</script>
+
+</body>
+</html>
